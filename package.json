@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn src/app.ts",
-    "learn": "ts-node-dev --respawn src/learn.ts",
     "build": "tsc",
     "start": "node dist/src/app.js"
   },

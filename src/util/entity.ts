@@ -1,5 +1,5 @@
 import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
-import { NameType, BloodType } from './type'
+import { NameType } from './type'
 
 @Entity()
 export class Person extends BaseEntity {

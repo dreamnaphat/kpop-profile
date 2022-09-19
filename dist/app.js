@@ -13,15 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = (0, express_1.default)();
 require('dotenv').config();
 require("reflect-metadata");
 const config_1 = require("./util/config");
 const connect_1 = require("./db/connect");
-app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    yield (0, connect_1.connect)();
-    res.send('hi im first api. 2');
-}));
-app.listen(config_1.SERVER.PORT, () => {
-    console.log('server is running on port ' + config_1.SERVER.PORT);
+/* routes import */
+const company_1 = require("./routes/company");
+const brand_1 = require("./routes/brand");
+const idol_1 = require("./routes/idol");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+const apiPath = '/api/v1/';
+app.use(apiPath + 'company', company_1.companyRouter);
+app.use(apiPath + 'brand', brand_1.brandRouter);
+app.use(apiPath + 'idol', idol_1.idolRouter);
+const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    /* database conection */
+    (0, connect_1.dbConnection)();
+    /* server start */
+    app.listen(config_1.SERVER.PORT, () => {
+        console.log('server is running on port ' + config_1.SERVER.PORT);
+    });
 });
+main();

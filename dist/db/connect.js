@@ -1,15 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connect = exports.sequelizeC = void 0;
-const sequelize_1 = require("sequelize");
-exports.sequelizeC = new sequelize_1.Sequelize('meaw_db', 'dreamnaphat', '123456', {
-    host: "localhost\SQLEXPRESS",
-    dialect: 'mssql',
+exports.dbConnection = exports.connection = void 0;
+const typeorm_1 = require("typeorm");
+const config_1 = require("../util/config");
+exports.connection = new typeorm_1.DataSource({
+    type: 'mysql',
+    host: config_1.DB.HOST,
+    port: 3306,
+    username: config_1.DB.USER,
+    password: config_1.DB.PWD,
+    database: config_1.DB.NAME,
+    entities: ["src/db/entity/*.ts"],
+    synchronize: true
 });
-function connect() {
-    return exports.sequelizeC.authenticate()
+function dbConnection() {
+    exports.connection
+        .initialize()
         .then(() => {
-        console.log('db connected');
+        console.log('database is conected.');
+    })
+        .catch((error) => {
+        console.error(error);
     });
 }
-exports.connect = connect;
+exports.dbConnection = dbConnection;
